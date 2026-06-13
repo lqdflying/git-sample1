@@ -138,6 +138,11 @@ git push origin refs/notes/*
    - `feature/local-only` → do not push (demonstrates local-only)
    - `feature/remote-only` → push then delete local (demonstrates remote-only)
 
+6. **Always update AGENTS.md whenever the branch diagram changes** —
+   If you create, delete, rename, or restructure branches, update the
+   "Branch Layout" section in this file and the branch table in `README.md`
+   in the same commit (or immediately after).
+
 ---
 
 ## Common Commands for This Repo

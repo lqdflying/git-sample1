@@ -1,1 +1,2 @@
 .env\nnode_modules/\n*.log
+node_modules/

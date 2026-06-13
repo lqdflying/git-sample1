@@ -425,6 +425,50 @@ git fetch --all
 
 ---
 
+## 🔀 Divergence from Main
+
+`feature/diverged` demonstrates true **divergence** — both `master` and the
+feature branch have moved forward independently with unique commits:
+
+```
+master        *──*──*  (hotfix + monitoring)
+               │
+feature/diverged *──*  (module A + function B)
+```
+
+Neither branch is an ancestor of the other. The last common commit is the
+**merge base**.
+
+### Inspecting Divergence
+
+```bash
+# Find the merge base
+git merge-base master feature/diverged
+
+# Commits on feature/diverged but NOT on master
+git log master..feature/diverged --oneline
+
+# Commits on master but NOT on feature/diverged
+git log feature/diverged..master --oneline
+
+# Visual graph
+git log --oneline --graph --decorate master feature/diverged
+```
+
+### Resolving Divergence
+
+```bash
+# Merge (creates a merge commit)
+git checkout master
+git merge --no-ff feature/diverged
+
+# Rebase (rewrites feature history onto master)
+git checkout feature/diverged
+git rebase master
+```
+
+---
+
 ## 📖 Key Takeaways
 
 | Scenario                  | Command Pattern                          |

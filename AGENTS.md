@@ -40,9 +40,9 @@ git push origin --tags
 
 ---
 
-## Branch Layout (Current — 6 Branches)
+## Branch Layout (Current — 7 Branches)
 
-The repo demonstrates **6 branches** covering remote presence and sync states:
+The repo demonstrates **7 branches** covering remote presence, sync states, and divergence:
 
 | Branch | Local | `origin` | `upstream` | Lesson |
 |--------|-------|----------|------------|--------|
@@ -52,6 +52,7 @@ The repo demonstrates **6 branches** covering remote presence and sync states:
 | `feature/remote-only` | ❌ | ✅ | ❌ | Remote-only branch (no local) |
 | `feature/local-ahead-origin` | ✅ | ✅ `[behind 2]` | ✅ (tally) | Local ahead of origin |
 | `feature/remote-ahead-origin` | ✅ | ✅ `[ahead 2]` | ✅ (tally) | Remote ahead of local |
+| `feature/diverged` | ✅ | ✅ | ❌ | **Diverged from master** — both sides have unique commits |
 
 ### Checking remote presence and sync
 ```bash
@@ -138,7 +139,7 @@ git push origin refs/notes/*
 2. **Always simulate realistic authorship** — override `GIT_AUTHOR_*` when
    committing new simulated work.
 
-3. **Keep to 6 branches** — if adding new scenarios, replace an existing
+3. **Keep to 7 branches** — if adding new scenarios, replace an existing
    feature branch rather than proliferating branches.
 
 4. **Keep the README updated** — if new workflows are added, document them
@@ -151,6 +152,7 @@ git push origin refs/notes/*
    - `feature/remote-only` → push then delete local (demonstrates remote-only)
    - `feature/local-ahead-origin` → push v3 to upstream, v1 to origin
    - `feature/remote-ahead-origin` → push v1 to upstream, v3 to origin, reset local to v1
+   - `feature/diverged` → push to `origin` only
 
 6. **Always update AGENTS.md whenever the branch diagram changes** —
    If you create, delete, rename, or restructure branches, update the

@@ -374,6 +374,63 @@ git commit -m "feat: my feature"
 
 ---
 
+## 📊 Ahead / Behind Remote Simulation
+
+Several branches are intentionally out of sync with remotes to demonstrate `git branch -vv` and `git log` ahead/behind workflows:
+
+```bash
+# View all branches with ahead/behind counts
+git branch -vv
+```
+
+### Ahead of Remote
+
+| Branch | Tracking | Status | Explanation |
+|--------|----------|--------|-------------|
+| `feature/unpushed` | `origin/feature/unpushed` | `[ahead 3]` | 3 commits exist locally but not on `origin` |
+| `feature/only-on-origin` | `upstream/feature/only-on-origin` | `[ahead 2]` | Exists on `origin` but has 2 extra commits vs `upstream` |
+| `feature/only-on-upstream` | `origin/feature/only-on-upstream` | `[ahead 2]` | Exists on `upstream` but has 2 extra commits vs `origin` |
+| `feature/mixed-sync` | `origin/feature/mixed-sync` | `[ahead 2]` | Part 2 pushed to `upstream` only; part 3 not pushed anywhere |
+
+### Behind Remote
+
+| Branch | Tracking | Status | Explanation |
+|--------|----------|--------|-------------|
+| `feature/behind-origin` | `origin/feature/behind-origin` | `[behind 2]` | Local reset to v1; origin has v2 and v3 |
+| `feature/behind-upstream` | `upstream/feature/behind-upstream` | `[behind 2]` | Local reset to v1; upstream has v2 and v3 |
+
+### Inspecting Ahead/Behind Manually
+
+```bash
+# Commits local has that origin doesn't
+git log origin/feature/unpushed..feature/unpushed --oneline
+
+# Commits origin has that local doesn't
+git log feature/behind-origin..origin/feature/behind-origin --oneline
+
+# Diff between local and a remote branch
+git diff feature/mixed-sync origin/feature/mixed-sync --stat
+```
+
+### Syncing Strategies
+
+```bash
+# Push local ahead commits to tracked remote
+git push origin feature/unpushed
+
+# Pull remote commits when local is behind
+git checkout feature/behind-origin
+git pull origin feature/behind-origin
+
+# Force push (destructive — only when you know what you're doing)
+git push origin feature/behind-origin --force-with-lease
+
+# Fetch all remotes to update local knowledge of remote state
+git fetch --all
+```
+
+---
+
 ## 📖 Key Takeaways
 
 | Scenario                  | Command Pattern                          |

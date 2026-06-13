@@ -12,3 +12,4 @@
 ## Environment Setup\n\nCopy .env.example to .env
 ## API Documentation
 - GET /api/users
+- POST /api/login

@@ -1,1 +1,2 @@
 // notifications
+function sendEmail() {}

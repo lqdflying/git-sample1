@@ -40,10 +40,9 @@ git push origin --tags
 
 ---
 
-## Branch Layout (Current — 4 Branches)
+## Branch Layout (Current — 6 Branches)
 
-The repo is intentionally simplified to **4 branches**, each demonstrating a
-different remote relationship:
+The repo demonstrates **6 branches** covering remote presence and sync states:
 
 | Branch | Local | `origin` | `upstream` | Lesson |
 |--------|-------|----------|------------|--------|
@@ -51,17 +50,30 @@ different remote relationship:
 | `feature/single-remote` | ✅ | ✅ | ❌ | Single-remote branch |
 | `feature/local-only` | ✅ | ❌ | ❌ | Local-only branch |
 | `feature/remote-only` | ❌ | ✅ | ❌ | Remote-only branch (no local) |
+| `feature/local-ahead-origin` | ✅ | ✅ `[behind 2]` | ✅ (tally) | Local ahead of origin |
+| `feature/remote-ahead-origin` | ✅ | ✅ `[ahead 2]` | ✅ (tally) | Remote ahead of local |
 
-### Checking remote presence
+### Checking remote presence and sync
 ```bash
 git branch -a          # All branches (local + remote)
-git branch -vv         # Local branches with tracking info
+git branch -vv         # Local branches with tracking + ahead/behind
 git branch -r          # Remote branches only
 ```
 
 ### Checkout a remote-only branch locally
 ```bash
 git checkout -b feature/remote-only origin/feature/remote-only
+```
+
+### Pull when remote is ahead
+```bash
+git checkout feature/remote-ahead-origin
+git pull origin feature/remote-ahead-origin
+```
+
+### Push when local is ahead
+```bash
+git push origin feature/local-ahead-origin
 ```
 
 ---
@@ -126,7 +138,7 @@ git push origin refs/notes/*
 2. **Always simulate realistic authorship** — override `GIT_AUTHOR_*` when
    committing new simulated work.
 
-3. **Keep to 4 branches** — if adding new scenarios, replace an existing
+3. **Keep to 6 branches** — if adding new scenarios, replace an existing
    feature branch rather than proliferating branches.
 
 4. **Keep the README updated** — if new workflows are added, document them
@@ -137,6 +149,8 @@ git push origin refs/notes/*
    - `feature/single-remote` → `origin` only
    - `feature/local-only` → do not push (demonstrates local-only)
    - `feature/remote-only` → push then delete local (demonstrates remote-only)
+   - `feature/local-ahead-origin` → push v3 to upstream, v1 to origin
+   - `feature/remote-ahead-origin` → push v1 to upstream, v3 to origin, reset local to v1
 
 6. **Always update AGENTS.md whenever the branch diagram changes** —
    If you create, delete, rename, or restructure branches, update the

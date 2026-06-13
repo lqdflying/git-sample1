@@ -5,3 +5,4 @@ module.exports = { config, log, db };
 // Analytics module
 // Payment gateway integration v2
 // Analytics v2
+// Config refactored
